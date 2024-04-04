@@ -20,7 +20,6 @@ public class Database {
                     ConfigDB.USERNAME.getValue(),
                     ConfigDB.PASSWORD.getValue()
             );
-            System.out.println("Connected successfully");
 
             return connection;
 

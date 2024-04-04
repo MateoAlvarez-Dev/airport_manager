@@ -24,7 +24,7 @@ public class PlaneMenu {
                     3) Create new plane
                     4) Delete a plane
                     5) Update a plane
-                    6) Exit
+                    6) Back
                 """);
 
             switch (option){

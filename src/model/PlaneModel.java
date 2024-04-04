@@ -1,6 +1,5 @@
 package model;
 
-import database.CRUD;
 import database.Database;
 import entity.Plane;
 
@@ -73,14 +72,10 @@ public class PlaneModel extends GeneralModel {
     }
 
     public boolean update(Object object){
-        boolean result = super.update("airplanes", object);
-        this.database.disconnect();
-        return result;
+        return super.update("airplanes", object);
     }
 
     public boolean delete(int id){
-        boolean result = super.delete("airplanes", id);
-        this.database.disconnect();
-        return result;
+        return super.delete("airplanes", id);
     }
 }

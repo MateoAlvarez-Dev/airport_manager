@@ -67,6 +67,7 @@ public class GeneralModel implements CRUD {
             JOptionPane.showMessageDialog(null, "An error has occurred while deleting the data...");
         }
 
+        this.database.disconnect();
         return wasDeleted;
     }
 
@@ -111,9 +112,6 @@ public class GeneralModel implements CRUD {
             String[] fieldNames = fieldsFormatted[0].split(",");
             String[] fieldValues = fieldsFormatted[1].split(",");
 
-            System.out.println(fieldsFormatted[0]);
-            System.out.println(fieldsFormatted[1]);
-
             String setFields = "";
 
             for(int i = 1; i < fieldNames.length; i++){
@@ -124,8 +122,6 @@ public class GeneralModel implements CRUD {
             }
 
             String sql = "UPDATE " + tableName + " SET " + setFields + " WHERE id = " + fieldValues[0];
-
-            System.out.println(sql);
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -138,6 +134,8 @@ public class GeneralModel implements CRUD {
         }catch (Exception e) {
             JOptionPane.showMessageDialog(null, "An error has occurred while listing all data...");
         }
+
+        this.database.disconnect();
 
         return result;
     }
@@ -191,9 +189,8 @@ public class GeneralModel implements CRUD {
         ArrayList<String> getterValues = new ArrayList<>();
 
         try{
-            Method[] methods = c.getClass().getMethods();
-            for(Method m : methods){
-                if(!ArrayIncludes(m.getName(), getterMethodsNames)) continue;
+            for(String getterMethodName : getterMethodsNames){
+                Method m = c.getClass().getMethod(getterMethodName);
                 String fieldName = m.getName().replaceAll("get", "").toLowerCase();
 
                 String fieldDataType = m.getReturnType().toString();
@@ -205,18 +202,11 @@ public class GeneralModel implements CRUD {
         } catch (InvocationTargetException e) {
             getterValues = null;
             System.out.println("Error on the invoke");
-        } catch (IllegalAccessException e) {
+        } catch (IllegalAccessException | NoSuchMethodException e) {
             getterValues = null;
             System.out.println("Cannot access to the method");
         }
 
         return getterValues;
-    }
-
-    private boolean ArrayIncludes(String value, String[] arr){
-        for(String str : arr){
-            if(str.contains(value)) return true;
-        }
-        return false;
     }
 }
