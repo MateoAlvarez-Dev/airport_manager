@@ -86,6 +86,7 @@ public class GeneralModel implements CRUD {
             String[] fieldsFormatted = getFormattedFields(newFieldsArray, 1);
 
             String sql = "INSERT INTO " + tableName + "(" + fieldsFormatted[0] + ") VALUES (" + fieldsFormatted[1] + ")";
+
             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.execute();
             result = preparedStatement.getGeneratedKeys();

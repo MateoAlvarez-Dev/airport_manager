@@ -4,7 +4,7 @@ public class Booking implements EntityInterface{
 
     private int id;
     private String booking_date;
-    private int seat;
+    private String seat;
     private int id_passenger;
     private int id_flight;
 
@@ -24,11 +24,11 @@ public class Booking implements EntityInterface{
         this.booking_date = booking_date;
     }
 
-    public int getSeat() {
+    public String getSeat() {
         return seat;
     }
 
-    public void setSeat(int seat) {
+    public void setSeat(String seat) {
         this.seat = seat;
     }
 

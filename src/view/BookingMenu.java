@@ -1,15 +1,15 @@
 package view;
 
-import controller.FlightController;
+import controller.BookingController;
 
 import javax.swing.*;
 
-public class FlightMenu {
+public class BookingMenu {
 
-    private FlightController flightController;
+    private BookingController bookingController;
 
-    public FlightMenu(){
-        this.flightController = new FlightController();
+    public BookingMenu(){
+        this.bookingController = new BookingController();
     }
 
     public void render(){
@@ -19,34 +19,33 @@ public class FlightMenu {
             option = JOptionPane.showInputDialog("""
 Welcome to the Airport Manager!
 What you gonna do today?
-1) Show all flights
-2) Search flight by ID
-3) Create new flight
-4) Delete a flight
-5) Update a flight
+1) Show all bookings
+2) Search booking by ID
+3) Create new booking
+4) Delete a booking
+5) Update a booking
 6) Back
 """);
 
             switch (option){
-
                 case "1":
-                    this.flightController.findAll();
+                    this.bookingController.findAll();
                     break;
 
                 case "2":
-                    this.flightController.findById();
+                    this.bookingController.findById();
                     break;
 
                 case "3":
-                    this.flightController.create();
+                    this.bookingController.create();
                     break;
 
                 case "4":
-                    this.flightController.delete();
+                    this.bookingController.delete();
                     break;
 
                 case "5":
-                    this.flightController.update();
+                    this.bookingController.update();
                     break;
 
                 case "6":

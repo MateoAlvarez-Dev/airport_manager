@@ -28,6 +28,7 @@ What you gonna do today?
 """);
 
             switch (option){
+
                 case "1":
                     this.passengerController.findAll();
                     break;
@@ -50,6 +51,7 @@ What you gonna do today?
 
                 case "6":
                     return;
+
             }
         }
     }

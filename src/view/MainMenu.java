@@ -4,14 +4,16 @@ import javax.swing.*;
 
 public class MainMenu {
 
-    private PlaneMenu planeMenu;
-    private PassengerMenu passengerMenu;
-    private FlightMenu flightMenu;
+    private final PlaneMenu planeMenu;
+    private final PassengerMenu passengerMenu;
+    private final FlightMenu flightMenu;
+    private final BookingMenu bookingMenu;
 
     public MainMenu(){
         this.planeMenu = new PlaneMenu();
         this.passengerMenu = new PassengerMenu();
         this.flightMenu = new FlightMenu();
+        this.bookingMenu = new BookingMenu();
     }
 
     public void render(){
@@ -24,6 +26,7 @@ public class MainMenu {
                     1) Plane Manager
                     2) Passenger Manager
                     3) Flight Manager
+                    4) Booking Manager
                     6) Exit
                 """);
 
@@ -38,6 +41,10 @@ public class MainMenu {
 
                 case "3":
                     this.flightMenu.render();
+                    break;
+
+                case "4":
+                    this.bookingMenu.render();
                     break;
 
                 case "6":

@@ -2,15 +2,20 @@ package controller;
 
 import entity.Flight;
 import model.FlightModel;
+import model.PlaneModel;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
 public class FlightController {
     private final FlightModel flightModel;
+    private final PlaneModel planeModel;
+    private final PlaneController planeController;
 
     public FlightController(){
         this.flightModel = new FlightModel();
+        this.planeModel = new PlaneModel();
+        this.planeController = new PlaneController();
     }
 
     public void findAll(){
@@ -46,11 +51,12 @@ public class FlightController {
 
     public void create(){
         Flight flight = new Flight();
+        String planeList = this.planeController.getList(this.planeModel.findAll());
 
         String destination = JOptionPane.showInputDialog("Insert the destination:");
         String departure_date = JOptionPane.showInputDialog("Insert the departure date in format AAAA-MM-DD");
         String departure_time = JOptionPane.showInputDialog("Insert the departure time in format HH:MM:SS");
-        int id_airplane = Integer.parseInt(JOptionPane.showInputDialog("Insert the airplane id:"));
+        int id_airplane = Integer.parseInt(JOptionPane.showInputDialog(planeList  + "Insert the airplane id:"));
 
         flight.setDestination(destination);
         flight.setDeparture_date(departure_date);
@@ -60,7 +66,7 @@ public class FlightController {
         flight = (Flight) flightModel.create(flight);
 
         if(flight != null){
-            JOptionPane.showMessageDialog(null, "Flight Created! " + flight.getId() + " - "
+            JOptionPane.showMessageDialog(null, "Flight Created! \n" + flight.getId() + " - "
                     + flight.getDestination() + " - "
                     + flight.getDeparture_date() + " - "
                     + flight.getDeparture_time() + " - "
