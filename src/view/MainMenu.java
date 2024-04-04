@@ -27,6 +27,7 @@ public class MainMenu {
                     break;
 
                 case "6":
+                    JOptionPane.showMessageDialog(null, "Good Bye!");
                     return;
             }
         }

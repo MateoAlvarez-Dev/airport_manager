@@ -49,7 +49,6 @@ public class PlaneMenu {
                     break;
 
                 case "6":
-                    JOptionPane.showMessageDialog(null, "Good Bye!");
                     return;
             }
         }

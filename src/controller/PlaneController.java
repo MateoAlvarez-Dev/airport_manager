@@ -31,7 +31,7 @@ public class PlaneController {
     public String getList(ArrayList<Plane> list){
         String listString = "Plane list:\n";
         for(Plane plane : list){
-            listString += plane.getId() + " - " + plane.getModel() + " - " + plane.getCapacity();
+            listString += plane.getId() + " - " + plane.getModel() + " - " + plane.getCapacity() + "\n";
         }
         return listString;
     }
@@ -54,7 +54,9 @@ public class PlaneController {
     }
 
     public void update(){
-        int idToUpdate = Integer.parseInt(JOptionPane.showInputDialog("Insert the id to update:"));
+        ArrayList<Plane> planes = this.planeModel.findAll();
+        String planeList = this.getList(planes);
+        int idToUpdate = Integer.parseInt(JOptionPane.showInputDialog(planeList+"Insert the id to update:"));
         Plane plane = (Plane) planeModel.findById(idToUpdate);
 
         if(plane != null){
@@ -71,12 +73,14 @@ public class PlaneController {
     }
 
     public void delete(){
-        int idToDelete = Integer.parseInt(JOptionPane.showInputDialog("Insert the id to delete:"));
+        ArrayList<Plane> planes = this.planeModel.findAll();
+        String planeList = this.getList(planes);
+        int idToDelete = Integer.parseInt(JOptionPane.showInputDialog(planeList + "Insert the id to delete:"));
         Plane plane = (Plane) this.planeModel.findById(idToDelete);
 
         if(plane != null){
-            int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the plane " + plane + "?");
-            if(confirmation == 1){
+            int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the plane " + plane.getModel() + "?");
+            if(confirmation == 0){
                 boolean isDeleted = this.planeModel.delete(idToDelete);
                 if(isDeleted) JOptionPane.showMessageDialog(null, "Deleted Succesfully");
                 else JOptionPane.showMessageDialog(null, "Error, cannot delete the element");

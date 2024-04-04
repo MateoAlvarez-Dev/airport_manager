@@ -20,17 +20,14 @@ public class PlaneModel extends GeneralModel {
 
     public Object create(Object object) {
         ResultSet result = super.create("airplanes", object);
-        Plane plane = null;
+        Plane plane = (Plane) object;
 
         try{
             while(result.next()){
-                plane = new Plane();
-                plane.setId(result.getInt("id"));
-                plane.setModel(result.getString("model"));
-                plane.setCapacity(result.getInt("capacity"));
+                plane.setId(result.getInt(1));
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "An error has occurred while creating the plane...");
+            JOptionPane.showMessageDialog(null, "An error has occurred while creating the plane... " + e.getMessage());
         }
 
         this.database.disconnect();

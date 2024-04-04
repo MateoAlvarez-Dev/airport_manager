@@ -84,12 +84,13 @@ public class GeneralModel implements CRUD {
 
             String[] fieldsFormatted = getFormattedFields(newFieldsArray, 1);
 
-            String sql = "INSERT INTO " + tableName + "(" + fieldsFormatted[0] + " ) VALUES (" + fieldsFormatted[1] + ")";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            result = preparedStatement.executeQuery();
+            String sql = "INSERT INTO " + tableName + "(" + fieldsFormatted[0] + ") VALUES (" + fieldsFormatted[1] + ")";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            preparedStatement.execute();
+            result = preparedStatement.getGeneratedKeys();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "An error has occurred while creating the data...");
+            JOptionPane.showMessageDialog(null, "An error has occurred while creating the data... " + e.getMessage());
         }
 
         return result;
@@ -106,9 +107,25 @@ public class GeneralModel implements CRUD {
                     .replace("[", "")
                     .replace("]", "").split(",");
 
-            String[] fieldsFormatted = getFormattedFields(newFieldsArray, 1);
+            String[] fieldsFormatted = getFormattedFields(newFieldsArray, 0);
+            String[] fieldNames = fieldsFormatted[0].split(",");
+            String[] fieldValues = fieldsFormatted[1].split(",");
 
-            String sql = "UPDATE " + tableName + "(" + fieldsFormatted[0] + " ) VALUES (" + fieldsFormatted[1] + ")";
+            System.out.println(fieldsFormatted[0]);
+            System.out.println(fieldsFormatted[1]);
+
+            String setFields = "";
+
+            for(int i = 1; i < fieldNames.length; i++){
+                setFields += fieldNames[i] + "=" + fieldValues[i];
+                if(i != fieldNames.length - 1){
+                    setFields += ",";
+                }
+            }
+
+            String sql = "UPDATE " + tableName + " SET " + setFields + " WHERE id = " + fieldValues[0];
+
+            System.out.println(sql);
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -131,7 +148,7 @@ public class GeneralModel implements CRUD {
         String fieldList = "";
         String valueList = "";
         for(int i = startIndex; i < fields.length; i++){
-            fieldList += fields[i].split("-")[0];
+            fieldList += fields[i].split("-")[0].trim();
             String[] value = fields[i].split("-")[1].split(":");
 
             if(value[0].equals("String")) valueList += "'" + value[1] + "'";
