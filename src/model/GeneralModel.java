@@ -146,8 +146,8 @@ public class GeneralModel implements CRUD {
         String fieldList = "";
         String valueList = "";
         for(int i = startIndex; i < fields.length; i++){
-            fieldList += fields[i].split("-")[0].trim();
-            String[] value = fields[i].split("-")[1].split(":");
+            fieldList += fields[i].split("--")[0].trim();
+            String[] value = fields[i].split("--")[1].split("::");
 
             if(value[0].equals("String")) valueList += "'" + value[1] + "'";
             else valueList += value[1];
@@ -197,7 +197,7 @@ public class GeneralModel implements CRUD {
                 String[] fieldDataTypeSplitted = fieldDataType.split("\\.");
                 String finalDataType = fieldDataTypeSplitted[fieldDataTypeSplitted.length - 1];
 
-                getterValues.add(fieldName + "-" + finalDataType + ":" + m.invoke(c, null));
+                getterValues.add(fieldName + "--" + finalDataType + "::" + m.invoke(c, null));
             }
         } catch (InvocationTargetException e) {
             getterValues = null;

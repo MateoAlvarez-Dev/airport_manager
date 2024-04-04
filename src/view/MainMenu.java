@@ -6,10 +6,12 @@ public class MainMenu {
 
     private PlaneMenu planeMenu;
     private PassengerMenu passengerMenu;
+    private FlightMenu flightMenu;
 
     public MainMenu(){
         this.planeMenu = new PlaneMenu();
         this.passengerMenu = new PassengerMenu();
+        this.flightMenu = new FlightMenu();
     }
 
     public void render(){
@@ -21,6 +23,7 @@ public class MainMenu {
                 What you gonna do today?
                     1) Plane Manager
                     2) Passenger Manager
+                    3) Flight Manager
                     6) Exit
                 """);
 
@@ -31,6 +34,10 @@ public class MainMenu {
 
                 case "2":
                     this.passengerMenu.render();
+                    break;
+
+                case "3":
+                    this.flightMenu.render();
                     break;
 
                 case "6":
