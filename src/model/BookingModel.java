@@ -77,11 +77,17 @@ public class BookingModel extends GeneralModel {
         return booking;
     }
 
-    public boolean isSeatAvailable(String date, int planeId, String seatId){
+    public int isSeatAvailable(String date, int planeId, String seatId){
+        // ERROR RETURN NAMES
+        // 0 -> No errors
+        // 1 -> Airplane full
+        // 2 -> Seat taken
+        // 3 -> Internal error
+
         Connection connection = this.database.connect();
         int taken = 0;
         int capacity = 1;
-        boolean finalResult = true;
+        int finalResult = 0;
 
         try{
             String sql = "SELECT b.id, b.seat, a.capacity FROM bookings b " +
@@ -99,21 +105,19 @@ public class BookingModel extends GeneralModel {
                 taken++;
                 String seat = result.getString("seat");
                 if(capacity == 1) capacity = result.getInt("capacity");
-                System.out.println("TAKEN SEAT -> " + seat);
-                System.out.println("SEAT TO TAKE -> " + seatId);
-                if(seat == seatId) {
-                    System.out.println("compared true");
-                    finalResult = false;
+                if(seat.equals(seatId)) {
+                    finalResult = 2;
                 };
             }
 
-            if(taken == capacity) finalResult = false;
+            if(taken == capacity) finalResult = 1;
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "An error has occurred while verifying the booking... " + e.getMessage());
-            finalResult = false;
+            finalResult = 3;
         }
 
+        this.database.disconnect();
         return finalResult;
     }
 

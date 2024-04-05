@@ -75,11 +75,14 @@ public class BookingController {
             return;
         }
 
-        boolean isSeatAvailable = this.bookingModel.isSeatAvailable(flight.getDeparture_date(), flight.getId_airplane(), seat);
+        int isSeatAvailable = this.bookingModel.isSeatAvailable(flight.getDeparture_date(), flight.getId_airplane(), seat);
 
-        if(!isSeatAvailable){
+        if(isSeatAvailable == 1){
+            JOptionPane.showMessageDialog(null, "The airplane is full, sorry");
+        }else if(isSeatAvailable == 2){
             JOptionPane.showMessageDialog(null, "Sorry but the seat " + seat + " is not available.");
-            return;
+        }else if(isSeatAvailable == 3){
+            JOptionPane.showMessageDialog(null, "Internal error");
         }else{
             booking.setSeat(seat);
             booking.setId_passenger(id_passenger);
