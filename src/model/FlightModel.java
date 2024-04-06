@@ -2,8 +2,11 @@ package model;
 
 import database.Database;
 import entity.Flight;
+import entity.Passenger;
 
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -73,6 +76,34 @@ public class FlightModel extends GeneralModel {
 
         this.database.disconnect();
         return flight;
+    }
+
+    public ArrayList<Flight> findByDate(String flightDate) {
+        Connection connection = this.database.connect();
+        ArrayList<Flight> flights = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM flights WHERE departure_date LIKE ? OR departure_time LIKE ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, "%" + flightDate + "%");
+            preparedStatement.setString(2, "%" + flightDate + "%");
+            ResultSet result = preparedStatement.executeQuery();
+
+            while (result.next()){
+                Flight flight = new Flight();
+                flight.setId(result.getInt("id"));
+                flight.setDeparture_date(result.getString("departure_date"));
+                flight.setDeparture_time(result.getString("departure_time"));
+                flight.setDestination(result.getString("destination"));
+                flight.setId_airplane(result.getInt("id_airplane"));
+                flights.add(flight);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "An error has occurred while listing the data...");
+        }
+
+        return flights;
     }
 
     public boolean update(Object object){

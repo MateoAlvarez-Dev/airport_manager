@@ -24,7 +24,8 @@ What you gonna do today?
 3) Create new passenger
 4) Delete a passenger
 5) Update a passenger
-6) Back
+6) Search passenger by Name
+7) Back
 """);
 
             switch (option){
@@ -50,6 +51,10 @@ What you gonna do today?
                     break;
 
                 case "6":
+                    this.passengerController.findByName();
+                    break;
+
+                case "7":
                     return;
 
             }

@@ -29,6 +29,19 @@ public class PassengerController {
         }
     }
 
+    public void findByName(){
+        String passengerName = JOptionPane.showInputDialog("Insert the name to search:");
+        ArrayList<Passenger> passengers = this.passengerModel.findByName(passengerName);
+
+        if(passengers.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Passenger not found");
+        }else{
+            String passengerList = this.getList(passengers);
+            JOptionPane.showMessageDialog(null, passengerList);
+        }
+
+    }
+
     public String getList(ArrayList<Passenger> list){
         String listString = "Passenger list: \n";
         for(Passenger passenger : list){

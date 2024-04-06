@@ -4,6 +4,8 @@ import database.Database;
 import entity.Passenger;
 
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -71,6 +73,33 @@ public class PassengerModel extends GeneralModel {
 
         this.database.disconnect();
         return passenger;
+    }
+
+    public ArrayList<Passenger> findByName(String passengerName) {
+        Connection connection = this.database.connect();
+        ArrayList<Passenger> passengerList = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM passengers WHERE name LIKE ? OR last_name LIKE ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, "%" + passengerName + "%");
+            preparedStatement.setString(2, "%" + passengerName + "%");
+            ResultSet result = preparedStatement.executeQuery();
+
+            while (result.next()){
+                Passenger passenger = new Passenger();
+                passenger.setId(result.getInt("id"));
+                passenger.setName(result.getString("name"));
+                passenger.setLast_name(result.getString("last_name"));
+                passenger.setIdentity(result.getString("identity"));
+                passengerList.add(passenger);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "An error has occurred while listing the data...");
+        }
+
+        return passengerList;
     }
 
     public boolean update(Object object){

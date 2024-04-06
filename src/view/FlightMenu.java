@@ -24,7 +24,8 @@ What you gonna do today?
 3) Create new flight
 4) Delete a flight
 5) Update a flight
-6) Back
+6) Search flight by Date
+7) Back
 """);
 
             switch (option){
@@ -50,6 +51,10 @@ What you gonna do today?
                     break;
 
                 case "6":
+                    this.flightController.findByDate();
+                    break;
+
+                case "7":
                     return;
             }
         }

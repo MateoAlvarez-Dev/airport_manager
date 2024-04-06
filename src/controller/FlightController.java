@@ -1,6 +1,8 @@
 package controller;
 
 import entity.Flight;
+import entity.Passenger;
+import entity.Plane;
 import model.FlightModel;
 import model.PlaneModel;
 
@@ -37,14 +39,28 @@ public class FlightController {
         }
     }
 
+    public void findByDate(){
+        String flightDate = JOptionPane.showInputDialog("Insert the date to search:");
+        ArrayList<Flight> flights = this.flightModel.findByDate(flightDate);
+
+        if(flights.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Flights not found");
+        }else{
+            String flightList = this.getList(flights);
+            JOptionPane.showMessageDialog(null, flightList);
+        }
+
+    }
+
     public String getList(ArrayList<Flight> list){
         String listString = "Flight list: \n";
         for(Flight flight : list){
+            Plane plane = (Plane) this.planeModel.findById(flight.getId_airplane());
             listString += flight.getId() + " - "
                     + flight.getDestination() + " - "
                     + flight.getDeparture_date() + " - "
                     + flight.getDeparture_time() + " - "
-                    + flight.getId_airplane() + "\n";
+                    + plane.getModel() + "\n";
         }
         return listString;
     }
